@@ -1,0 +1,74 @@
+
+# Quick Sort Algo
+def swap(item_a, item_b, arr):
+    """
+    takes 3 parameters, index of a, index of b, and an array
+    saves the value of item_a in temp
+
+    """
+    if item_a != item_b:
+        temp = arr[item_a]
+        arr[item_a] = arr[item_b]
+        arr[item_b] = temp
+
+def partition(elements, i, j):
+    # Hoarce Partition
+    pivot = i
+
+
+    while i < j:
+        while i < len(elements) and elements[i] <= elements[pivot]:
+            i += 1
+        while elements[j] > elements[pivot]:
+            j -= 1
+
+        if i < j:
+            swap(i, j, elements)
+
+    swap(pivot, j, elements)
+
+    return j
+
+def lomuto_partition(elements, start, end):
+    pivot_point = end
+    pivot_index = start
+    while pivot_index < pivot_point:
+        while pivot_index < len(elements)-1 and elements[pivot_index] <= elements[pivot_point]:
+            pivot_index += 1
+        i = pivot_index
+        while elements[i] > elements[pivot_point]:
+            i += 1
+        swap(pivot_index, i, elements)
+
+    swap(pivot_index, end, elements)
+
+    return pivot_index - 1
+
+def lumoto_part(elements, start, end):
+    pivot = elements[end]
+    p_index = start
+
+    for i in range(start, end):
+        if elements[i] <= pivot:
+            swap(i, p_index, elements)
+            p_index += 1
+
+    swap(p_index, end, elements)
+
+    return p_index
+
+def quick_sort(elements, i ,j):
+
+    if len(elements) == 1:
+        return
+    if i < j:
+        pi = lomuto_partition(elements, i, j)
+        quick_sort(elements, i, pi - 1)
+        quick_sort(elements, pi + 1, j)
+
+
+if __name__ == '__main__':
+
+    elements = [15, 3, 2, 35, 1, 24, 28]
+    quick_sort(elements, 0, len(elements)-1)
+    print(elements)
